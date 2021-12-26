@@ -1,7 +1,7 @@
 # Build and Release Folders
 bin-debug/
 bin-release/
-.idea/
+.idea/*
 */vendor/
 */mysql/data/
 src/docker/mysql/data/*
