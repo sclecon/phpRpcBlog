@@ -29,16 +29,49 @@ services:
     environment:
       PMA_ARBITRARY: 1
   http-server:
-    build: ./src/docker/http-server
+    build: "./src/docker/http-server"
     container_name: "http-server"
     ports:
       - "9501:9501"
     volumes:
-      - "./src/workspace/http-server:/data/project"
+      - "./src/workspace/http-server:/data/http-server"
     stdin_open: true
     tty: true
+    restart: "always"
+  tcp-service-system:
+    build: "./src/docker/tcp-service-system"
+    container_name: "tcp-service-system"
+    volumes:
+      - "./src/workspace/tcp-service-system:/data/service-system"
+    stdin_open: true
+    tty: true
+    restart: "always"
+  tcp-service-user:
+    build: "./src/docker/tcp-service-user"
+    container_name: "tcp-service-user"
+    volumes:
+      - "./src/workspace/tcp-service-user:/data/service-user"
+    stdin_open: true
+    tty: true
+    restart: "always"
 networks:
   default:
     driver: "bridge"
 
 # docker compose rm -f -s && docker compose up -d
+
+# 进入http服务器 并启动服务
+# docker exec -it http-server /bin/bash
+# rm -rf composer.lock && composer install
+# php bin/hyperf.php start
+
+# 进入微服务"系统服务"服务器 并启动服务
+# docker exec -it tcp-service-system /bin/bash
+# rm -rf composer.lock && composer install
+# php bin/hyperf.php start
+
+# 进入微服务"会员服务"服务器 并启动服务
+# docker exec -it tcp-service-user /bin/bash
+# rm -rf composer.lock && composer install
+# php bin/hyperf.php start
+
