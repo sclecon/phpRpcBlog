@@ -1,0 +1,1 @@
+# docker run -d -p 8500:8500 --restart always --name consul --network php-rpc-blog consul agent -server -bootstrap -ui -node=1 -client='0.0.0.0'

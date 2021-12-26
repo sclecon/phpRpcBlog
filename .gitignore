@@ -3,6 +3,7 @@ bin-debug/
 bin-release/
 .idea/
 */vendor/
+*/mysql/data/
 
 # Other files and folders
 .settings/

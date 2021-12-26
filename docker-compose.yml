@@ -1,0 +1,44 @@
+version: "3"
+services:
+  consul:
+    image: "consul:latest"
+    container_name: "consul"
+    command: ["agent", "-server", "-bootstrap", "-ui", "-node", "1", "-client", "0.0.0.0"]
+    restart: "always"
+    ports:
+      - "8500:8500"
+  mysql:
+    image: "mysql:8.0"
+    container_name: "mysql"
+    restart: "always"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "php-rpc-blog"
+      MYSQL_DATABASE: "prblog"
+      MYSQL_USER: "blog_user"
+      MYSQL_PASSWORD: "blog_password"
+    volumes:
+      - "./src/docker/mysql/data:/var/lib/mysql"
+  phpmyadmin:
+    image: "phpmyadmin:latest"
+    container_name: "phpmyadmin"
+    restart: "always"
+    ports:
+      - "9500:80"
+    environment:
+      PMA_ARBITRARY: 1
+  http-server:
+    build: ./src/docker/http-server
+    container_name: "http-server"
+    ports:
+      - "9501:9501"
+    volumes:
+      - "./src/workspace/http-server:/data/project"
+    stdin_open: true
+    tty: true
+networks:
+  default:
+    driver: "bridge"
+
+# docker compose rm -f -s && docker compose up -d
