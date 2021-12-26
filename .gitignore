@@ -4,7 +4,7 @@ bin-release/
 .idea/
 */vendor/
 */mysql/data/
-src/docker/mysql/data
+src/docker/mysql/data/*
 
 # Other files and folders
 .settings/
