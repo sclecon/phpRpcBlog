@@ -21,6 +21,7 @@ services:
     volumes:
       - "./dockerfile/mysql/sql:/data/sql"
       - "./dockerfile/mysql/utf8mb4.cnf:/etc/mysql/conf.d/"
+      - "./data/mysql:/var/lib/mysql"
     command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
   phpmyadmin:
     image: "phpmyadmin:latest"
