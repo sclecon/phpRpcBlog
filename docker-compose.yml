@@ -19,7 +19,7 @@ services:
       MYSQL_USER: "blog_user"
       MYSQL_PASSWORD: "blog_password"
     volumes:
-      - "./src/docker/mysql/data:/var/lib/mysql"
+      - "./data/mysql/data:/var/lib/mysql"
   phpmyadmin:
     image: "phpmyadmin:latest"
     container_name: "phpmyadmin"
@@ -29,7 +29,7 @@ services:
     environment:
       PMA_ARBITRARY: 1
   http-server:
-    build: "./src/docker/http-server"
+    build: "./dockerfile/http-server"
     container_name: "http-server"
     ports:
       - "9501:9501"
@@ -39,7 +39,7 @@ services:
     tty: true
     restart: "always"
   tcp-service-system:
-    build: "./src/docker/tcp-service-system"
+    build: "./dockerfile/tcp-service-system"
     container_name: "tcp-service-system"
     volumes:
       - "./src/workspace/tcp-service-system:/data/service-system"
@@ -47,7 +47,7 @@ services:
     tty: true
     restart: "always"
   tcp-service-user:
-    build: "./src/docker/tcp-service-user"
+    build: "./dockerfile/tcp-service-user"
     container_name: "tcp-service-user"
     volumes:
       - "./src/workspace/tcp-service-user:/data/service-user"
