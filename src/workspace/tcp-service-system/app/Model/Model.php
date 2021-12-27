@@ -15,4 +15,9 @@ use Hyperf\DbConnection\Model\Model as BaseModel;
 
 abstract class Model extends BaseModel
 {
+    const CREATED_AT = 'dateline';
+
+    const UPDATED_AT = 'dateline_up';
+
+    protected $attributes = ['status'=>1];
 }
