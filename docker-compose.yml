@@ -15,11 +15,13 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "php-rpc-blog"
-      MYSQL_DATABASE: "prblog"
-      MYSQL_USER: "blog_user"
-      MYSQL_PASSWORD: "blog_password"
+      MYSQL_DATABASE: "blog"
+      MYSQL_USER: "blog"
+      MYSQL_PASSWORD: "blog"
     volumes:
-      - "./data/mysql/data:/var/lib/mysql"
+      - "./dockerfile/mysql/sql:/data/sql"
+      - "./dockerfile/mysql/utf8mb4.cnf:/etc/mysql/conf.d/"
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
   phpmyadmin:
     image: "phpmyadmin:latest"
     container_name: "phpmyadmin"
@@ -74,4 +76,6 @@ networks:
 # docker exec -it tcp-service-user /bin/bash
 # rm -rf composer.lock && composer install
 # php bin/hyperf.php start
+
+# mysql --defaults-extra-file=/etc/mysql/my.cnf -uroot -p"$MYSQL_ROOT_PASSWORD" < /data/sql/init.sql
 
