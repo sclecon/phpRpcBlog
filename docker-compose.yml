@@ -55,14 +55,6 @@ services:
     stdin_open: true
     tty: true
     restart: "always"
-  tcp-service-user:
-    build: "./dockerfile/tcp-service-user"
-    container_name: "tcp-service-user"
-    volumes:
-      - "./src/workspace/tcp-service-user:/data/service-user"
-    stdin_open: true
-    tty: true
-    restart: "always"
 networks:
   default:
     driver: "bridge"
