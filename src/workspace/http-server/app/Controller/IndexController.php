@@ -11,8 +11,21 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\JsonRpc\Annotation\AdvertisementServiceInterface;
+use Hyperf\Di\Annotation\Inject;
+use Hyperf\HttpServer\Annotation\AutoController;
+
+/**
+ * @AutoController()
+ */
 class IndexController extends AbstractController
 {
+    /**
+     * @Inject
+     * @var AdvertisementServiceInterface
+     */
+    protected $advertisement;
+
     public function index()
     {
         $user = $this->request->input('user', 'Hyperfs');
@@ -22,6 +35,25 @@ class IndexController extends AbstractController
             'method' => $method,
             'message' => "Hello {$user}.",
             'server'    =>  'http-server'
+        ];
+    }
+
+    public function get(){
+        $id = $this->request->input('id', 1);
+        $data = $this->advertisement->get($id);
+        return [
+            'msg'   =>  'test',
+            'code'  =>  200,
+            'data'  =>  $data,
+        ];
+    }
+
+    public function clear(){
+        $data = $this->advertisement->list(10, 1);
+        return [
+            'msg'   =>  'test',
+            'code'  =>  200,
+            'data'  =>  $data,
         ];
     }
 }

@@ -5,13 +5,21 @@ namespace App\JsonRpc;
 
 
 use App\JsonRpc\Annotation\AdvertisementServiceInterface;
+use App\Server\Annotation\AdvertisementServerInterface;
+use Hyperf\Di\Annotation\Inject;
 use Hyperf\RpcServer\Annotation\RpcService;
 
 /**
- * @RpcService(name="AdvertisementServiceInterface", protocol="jsonrpc", server="jsonrpc", publishTo="consul")
+ * @RpcService(name="AdvertisementService", protocol="jsonrpc", server="jsonrpc", publishTo="consul")
  */
 class AdvertisementService implements AdvertisementServiceInterface
 {
+    /**
+     * @Inject
+     * @var AdvertisementServerInterface
+     */
+    protected $server;
+
     public function add(string $name, string $image, string $url): int
     {
         return 1;
@@ -29,11 +37,11 @@ class AdvertisementService implements AdvertisementServiceInterface
 
     public function get(int $advertisementId): array
     {
-        return [];
+        return $this->server->get($advertisementId);
     }
 
     public function list(int $number = 10, int $page = 1): array
     {
-        return [];
+        return $this->server->list($page, $number, 'banner');
     }
 }
