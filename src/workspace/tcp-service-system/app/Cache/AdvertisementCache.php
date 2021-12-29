@@ -17,15 +17,8 @@ class AdvertisementCache implements AdvertisementCacheInterface
      */
     protected $dispatcher;
 
-    public function clearGet(int $id): bool
-    {
-        var_dump('清空单项缓存');
-        return $this->clear(new DeleteListenerEvent('advertisement_get', ['id'=>$id]));
-    }
-
     public function clearList(int $page, int $limit, $type = false): bool
     {
-        var_dump('清空列表缓存');
         return $this->clear(new DeleteListenerEvent('advertisement_list', ['page'=>$page, 'limit'=>$limit, 'type'=>$type]));
     }
 

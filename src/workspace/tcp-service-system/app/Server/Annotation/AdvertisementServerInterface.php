@@ -8,10 +8,10 @@ interface AdvertisementServerInterface
 {
     /**
      * 获取广告数据
-     * @param int $id 主键ID
+     * @param int $advertisementId 主键ID
      * @return array
      */
-    public function get(int $id) : array;
+    public function get(int $advertisementId) : array;
 
     /**
      * 获取数据列表

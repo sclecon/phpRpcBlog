@@ -20,4 +20,13 @@ abstract class Model extends BaseModel
     const UPDATED_AT = 'dateline_up';
 
     protected $attributes = ['status'=>1];
+
+    protected $dateFormat = 'U';
+
+    public function fromDateTime($value)
+    {
+        $timestamp = strtotime(''.$value);
+        return "{$timestamp}";
+    }
+
 }
