@@ -19,7 +19,7 @@ services:
     container_name: "mysql"
     restart: "always"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "php-rpc-blog"
       MYSQL_DATABASE: "blog"
