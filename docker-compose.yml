@@ -50,6 +50,8 @@ services:
   tcp-service-system:
     build: "./dockerfile/tcp-service-system"
     container_name: "tcp-service-system"
+    ports:
+      - "10000:9501"
     volumes:
       - "./src/workspace/tcp-service-system:/data/service-system"
     stdin_open: true

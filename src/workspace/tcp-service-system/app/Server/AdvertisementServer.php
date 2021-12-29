@@ -23,7 +23,6 @@ class AdvertisementServer implements AdvertisementServerInterface
      */
     public function get(int $id): array
     {
-        var_dump('从数据库查询');
         $advertisement = Advertisement::find($id);
         if ($advertisement){
             return $advertisement->toArray();
@@ -31,10 +30,41 @@ class AdvertisementServer implements AdvertisementServerInterface
         return [];
     }
 
-    public function list(int $page, int $limit, $type = false): array
+    /**
+     * @Cacheable(prefix="advertisement_list", value="_#{page}_#{limit}_#{type}", ttl=3600, listener="advertisement_list")
+     */
+    public function list(int $page, int $limit = 10, $type = false): array
     {
-        var_dump('清空Redis缓存');
-        $this->cache->clearGet(1);
+        $advertisement = Advertisement::where(function($query) use ($type) {
+            if (is_string($type)){
+                $query->where('ctype', $type);
+            }
+        })->forPage($page, $limit)->get();
+        if ($advertisement){
+            return $advertisement->toArray();
+        }
         return [];
     }
+
+    public function add(string $image, string $name, string $url, string $type) : int
+    {
+        $advertisement = new Advertisement();
+        $advertisement->image = $image,
+        $advertisement->name = $name,
+        $advertisement->url = $url,
+        $advertisement->ctype = $type;
+        $advertisement->save();
+        return $advertisement->id ?: 0;
+    }
+
+    public function edit(int $advertisementId, array $data): bool
+    {
+        return Advertisement::where('id', $advertisementId)->update($data);
+    }
+
+    public function del(int $advertisementId): bool
+    {
+        return Advertisement::where('id', $advertisementId)->delete();
+    }
+
 }
